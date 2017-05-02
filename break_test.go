@@ -295,3 +295,16 @@ func bench(b *testing.B, f func(rune) Prop) {
 		}
 	}
 }
+
+func TestProperties(t *testing.T) {
+	var input = [][]rune{
+		nil,
+		[]rune{},
+	}
+	for _, x := range input {
+		y := Properties(x)
+		if y != nil {
+			t.Errorf("Properties(%v) = %v want %v", x, y, nil)
+		}
+	}
+}
