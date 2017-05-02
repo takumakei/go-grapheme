@@ -24,9 +24,9 @@ func Break(s []rune) [][]rune {
 }
 
 func Properties(s []rune) []Prop {
-	r := make([]Prop, 0, len(s))
-	for _, v := range s {
-		r = append(r, Property(v))
+	r := make([]Prop, len(s))
+	for i, v := range s {
+		r[i] = Property(v)
 	}
 	return r
 }
