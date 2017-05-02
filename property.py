@@ -11,6 +11,8 @@ def main():
 
     print("package grapheme")
     print()
+    print("//go:generate stringer -type=Prop $GOFILE")
+    print()
     print("type Prop int")
     print()
     print("const (")
@@ -31,8 +33,6 @@ def main():
     print("func Property(r rune) Prop {")
     print_tree(c)
     print("}")
-    print()
-    print("//go:generate stringer -type=Prop $GOFILE")
 
 
 def labels(tries):

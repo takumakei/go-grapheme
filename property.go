@@ -2,6 +2,8 @@
 
 package grapheme
 
+//go:generate stringer -type=Prop $GOFILE
+
 type Prop int
 
 const (
@@ -6485,5 +6487,3 @@ func Property(r rune) Prop {
 		}
 	}
 }
-
-//go:generate stringer -type=Prop $GOFILE
