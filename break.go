@@ -2,13 +2,15 @@ package grapheme
 
 // Break slices s into grapheme clusters and returns a slice of them.
 func Break(s []rune) [][]rune {
-	if len(s) == 0 {
+	l := len(s)
+
+	if l == 0 {
 		return nil
 	}
 
 	p := properties(s)
 
-	r := make([][]rune, 0, len(s))
+	r := make([][]rune, 0, l)
 
 	for {
 		i := next(p)
