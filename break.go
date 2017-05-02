@@ -6,7 +6,7 @@ func Break(s []rune) [][]rune {
 		return nil
 	}
 
-	p := Properties(s)
+	p := properties(s)
 
 	r := make([][]rune, 0, len(s))
 
@@ -24,6 +24,13 @@ func Break(s []rune) [][]rune {
 }
 
 func Properties(s []rune) []Prop {
+	if len(s) == 0 {
+		return nil
+	}
+	return properties(s)
+}
+
+func properties(s []rune) []Prop {
 	r := make([]Prop, len(s))
 	for i, v := range s {
 		r[i] = Property(v)
