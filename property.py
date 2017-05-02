@@ -33,6 +33,35 @@ def main():
     print("func Property(r rune) Prop {")
     print_tree(c)
     print("}")
+    print()
+
+    print("var keys = [...]rune{")
+    for i in b:
+        print("  0x{:04x},".format(i[0]))
+    print("}")
+    print("var klen = len(keys)")
+    print()
+    print("var vals = [...]Prop{")
+    for i in b:
+        print("  {},".format(i[1]))
+    print("}")
+    print()
+    print("func Property2(r rune) Prop {")
+    print("  a, b := 0, klen")
+    print("  for {")
+    print("    c := b - a")
+    print("    if c <= 1 {")
+    print("      break")
+    print("    }")
+    print("    m := a + c/2")
+    print("    if r < keys[m] {")
+    print("      b = m")
+    print("    } else {")
+    print("      a = m")
+    print("    }")
+    print("  }")
+    print("  return vals[a]")
+    print("}")
 
 
 def labels(tries):
