@@ -35,6 +35,14 @@ def main():
     print("}")
     print()
 
+
+def property_test():
+    a = read_trie(sys.stdin)
+    a.sort(key=lambda c: c[0])
+    b = regularize(a)
+    b.append((0x10FFFF, "OutOfRange"))
+    print("package grapheme")
+    print()
     print("var keys = [...]rune{")
     for i in b:
         print("  0x{:04x},".format(i[0]))
@@ -46,7 +54,7 @@ def main():
         print("  {},".format(i[1]))
     print("}")
     print()
-    print("func Property2(r rune) Prop {")
+    print("func property(r rune) Prop {")
     print("  a, b := 0, klen")
     print("  for {")
     print("    c := b - a")
