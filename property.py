@@ -11,6 +11,8 @@ def main():
 
     print("package grapheme")
     print()
+    print("//go:generate stringer -type=Prop $GOFILE")
+    print()
     print("type Prop int")
     print()
     print("const (")
@@ -32,7 +34,42 @@ def main():
     print_tree(c)
     print("}")
     print()
-    print("//go:generate stringer -type=Prop $GOFILE")
+
+
+def property_test():
+    a = read_trie(sys.stdin)
+    a.sort(key=lambda c: c[0])
+    b = regularize(a)
+    b.append((0x10FFFF, "OutOfRange"))
+    print("package grapheme")
+    print()
+    print("var keys = [...]rune{")
+    for i in b:
+        print("  0x{:04x},".format(i[0]))
+    print("}")
+    print("var klen = len(keys)")
+    print()
+    print("var vals = [...]Prop{")
+    for i in b:
+        print("  {},".format(i[1]))
+    print("}")
+    print()
+    print("func property(r rune) Prop {")
+    print("  a, b := 0, klen")
+    print("  for {")
+    print("    c := b - a")
+    print("    if c <= 1 {")
+    print("      break")
+    print("    }")
+    print("    m := a + c/2")
+    print("    if r < keys[m] {")
+    print("      b = m")
+    print("    } else {")
+    print("      a = m")
+    print("    }")
+    print("  }")
+    print("  return vals[a]")
+    print("}")
 
 
 def labels(tries):

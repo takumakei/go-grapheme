@@ -267,3 +267,31 @@ func TestUnknownProperty(t *testing.T) {
 		t.Errorf("Prop(%v).String() = %s want %s", x, y, w)
 	}
 }
+
+func TestProperty(t *testing.T) {
+	for i := 0; i < 0x110000; i++ {
+		r := rune(i)
+		a := Property(r)
+		b := property(r)
+		if a != b {
+			t.Errorf("Property2(0x%04x) = %s want %s", r, b, a)
+		}
+	}
+}
+
+func BenchmarkProperty(b *testing.B) {
+	bench(b, Property)
+}
+
+func BenchmarkPropertyForTest(b *testing.B) {
+	bench(b, property)
+}
+
+func bench(b *testing.B, f func(rune) Prop) {
+	for i := 0; i < b.N; i++ {
+		var r rune
+		for r = 0; r <= 0x110000; r++ {
+			f(r)
+		}
+	}
+}

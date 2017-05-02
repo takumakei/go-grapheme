@@ -7,11 +7,17 @@ GRAPHEME_BREAK_TEST := http://www.unicode.org/Public/9.0.0/ucd/auxiliary/Graphem
 help: ## show this message
 	@grep -E '^[a-zA-Z0-9_./-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-23s\033[0m %s\n", $$1, $$2}'
 
-all: property.go grapheme_break_test.go ## generate sources
+all: property.go property_test.go grapheme_break_test.go ## generate sources
 
 property.go: tmp/GraphemeBreakProperty.txt property.py ## property.go
 	printf '// Code generated from "$(GRAPHEME_BREAK_PROP)"; DO NOT EDIT\n\n' > $@
 	./property.py main < $< >> $@
+	go fmt $@
+	go generate
+
+property_test.go: tmp/GraphemeBreakProperty.txt property.py ## property.go
+	printf '// Code generated from "$(GRAPHEME_BREAK_PROP)"; DO NOT EDIT\n\n' > $@
+	./property.py property_test < $< >> $@
 	go fmt $@
 	go generate
 
@@ -35,3 +41,7 @@ coverage: c.out ## coverage
 
 c.out: property.go break.go break_test.go grapheme_break_test.go
 	go test -v -run=. -coverprofile=$@
+
+.PHONY: bench ## benchmark
+bench:
+	go test -bench=.
