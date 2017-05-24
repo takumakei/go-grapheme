@@ -42,6 +42,6 @@ coverage: c.out ## coverage
 c.out: property.go break.go break_test.go grapheme_break_test.go
 	go test -v -run=. -coverprofile=$@
 
-.PHONY: bench ## benchmark
-bench:
+.PHONY: bench
+bench: ## benchmark
 	go test -bench=.
